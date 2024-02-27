@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="seminar_1.js" defere></script>
+</head>
+<body>
+    <div>Element 1</div>
+    <div data-active="true">Element 2</div>
+    <div>Element 3</div>
+    <div data-active="true">Element 4</div>
+    <script>
+        const elements = document.querySelectorAll('div')
+        const array = Array.from(elements)
+        const active = array.filter(element => element.hasAttribute('data-active'))
+        console.log(active);
+    </script>
+</body>
+</html>
