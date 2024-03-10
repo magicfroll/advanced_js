@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="seminar_3.js"></script>
+</head>
+<body>
+    <button class="load-button">Загрузить новости</button>
+    <div class="news-container"></div>
+    <script>
+        const mockDatabase = [
+            { title: "Новость 1", content: "Содержимое новости 1..." },
+            { title: "Новость 2", content: "Содержимое новости 2..." },
+        ];
+
+        function fetchNews() {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {       
+                    if (Math.random() < 0.9) {
+                        console.log(mockDatabase);
+                        resolve(mockDatabase);
+                    } else {
+                        reject('Ошибка при загрузке')
+                    }
+                }, 2000);
+            })
+        }
+
+        const loadButton = document.querySelector('.load-button');
+        const newsContainer = document.querySelector('.news-container');
+
+        loadButton.addEventListener('click', () => {
+            loadButton.disabled = true;
+            fetchNews()
+                .then((result) => {
+                    result.forEach((element) => {
+                        console.log(element.title);
+                        const newsDivContainer = document.createElement('div');
+                        newsDivContainer.innerHTML = `<h2>${element.title}</h2><br><p>${element.content}</p>`;
+                        newsContainer.appendChild(newsDivContainer);
+                    });
+                }).catch((err) => {
+                    console.log(err);
+                    const newsDivContainer = document.createElement('div')
+                    newsDivContainer.innerHTML = `<h2>${err}</h2>`
+                    newsContainer.appendChild(newsDivContainer);
+                }).finally(() => loadButton.disabled = false) 
+        })
+    </script>
+</body>
+</html>

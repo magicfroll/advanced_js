@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Вы разрабатываете онлайн-магазин по заказу индивидуальных мебельных комплектов. Посетители сайта могут выбирать разные элементы мебели, цвета и материалы для своего гарнитура. После того как пользователь собрал свой комплект и сохраняет свой выбор, информация о нем сохраняется в куки. При следующем посещении сайта их индивидуальные настройки автоматически загружаются, и они видят ранее созданный мебельный комплект.
+
+    1. Создайте базовую HTML-структуру с различными элементами мебели (например, стол, стул, диван) и возможными параметрами для них (цвет, материал, дизайн).
+    2. Пользователи могут выбирать разные элементы и параметры, чтобы составить свой мебельный гарнитур.
+    3. После выбора всех желаемых параметров предоставьте кнопку "Сохранить комплект", которая сохраняет текущий выбор пользователя в куки.
+    4. При следующем посещении сайта автоматически загрузите сохраненные параметры из куки и отобразите ранее созданный комплект.
+    5. Убедитесь, что у пользователей есть возможность очистить сохраненные настройки (очистить куки). -->
+
+    <h1>Создайте свой мебельный гарнитур</h1>
+
+
+    <div class="furniture-option">
+        <h2>Стол</h2>
+        <label>
+            Цвет:
+            <select id="table-color">
+                <option value="brown">Коричневый</option>
+                <option value="white">Белый</option>
+            </select>
+        </label>
+    </div>
+
+    <div class="furniture-option">
+        <h2>Стул</h2>
+        <label>
+            Материал:
+            <select id="chair-material">
+                <option value="wood">Дерево</option>
+                <option value="metal">Металл</option>
+            </select>
+        </label>
+    </div>
+
+    <button id="save-btn">Сохранить комплект</button>
+    <button id="load-btn">Загрузить последний комплект</button>
+    <button id="clear-btn">Очистить настройки</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script>
+
+
+        const saveButton = document.querySelector('#save-btn');
+        const loadButton = document.querySelector('#load-btn');
+        const clearButton = document.querySelector('#clear-btn');
+
+        function saveOptions() {
+            console.log('Save cookies');
+            const tableColor = document.querySelector('#table-color').value;
+            const chairMaterial = document.querySelector('#chair-material').value;            
+            Cookies.set('tableColor', tableColor);
+            Cookies.set('chairMaterial', chairMaterial);            
+        }
+
+        function loadOptions() {
+            const tableColor = Cookies.get('tableColor');
+            const chairMaterial = Cookies.get('chairMaterial');
+            if(tableColor) {
+                document.querySelector('#table-color').value = tableColor;
+            }
+            if(chairMaterial) {
+                document.querySelector('#chair-material').value = chairMaterial;
+            }
+        }
+
+        function removeOptions() {
+            Cookies.remove('tableColor');
+            Cookies.remove('chairMaterial');
+            alert('Куки удалены');
+        }
+
+        saveButton.addEventListener('click', saveOptions);
+
+        loadButton.addEventListener('click', loadOptions);
+
+        clearButton.addEventListener('click', removeOptions);
+    </script>
+</body>
+</html>
